@@ -26,3 +26,9 @@ CREATE VIEW V_EmployeesHiredAfter2000 AS
 		WHERE YEAR(HireDate) > 2000
 
 SELECT * FROM V_EmployeesHiredAfter2000
+
+-- 09. Length of Last Name
+
+SELECT FirstName, LastName
+	FROM Employees
+	WHERE LEN(LastName) = 5
