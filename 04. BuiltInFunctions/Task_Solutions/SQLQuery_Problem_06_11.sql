@@ -32,3 +32,12 @@ SELECT * FROM V_EmployeesHiredAfter2000
 SELECT FirstName, LastName
 	FROM Employees
 	WHERE LEN(LastName) = 5
+
+-- 10. Rank Employees by Salary
+
+SELECT EmployeeID, FirstName, LastName, Salary,
+    DENSE_RANK() OVER (PARTITION BY Salary ORDER BY EmployeeID) AS Rank
+    FROM Employees
+    WHERE Salary >= 10000 AND Salary <= 50000
+    ORDER BY Salary DESC
+
