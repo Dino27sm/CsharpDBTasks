@@ -11,4 +11,9 @@ SELECT *
 	WHERE [Name] LIKE '[MKBE]%'
 	ORDER BY [Name] ASC
 
+-- 07. Find Towns Not Starting With
 
+SELECT *
+	FROM Towns
+	WHERE NOT (LEFT([Name], 1) = 'R' OR LEFT([Name], 1) = 'B' OR LEFT([Name], 1) = 'D')
+	ORDER BY [Name] ASC
