@@ -32,3 +32,9 @@ SELECT TOP(50) [Name], FORMAT([Start], 'yyyy-MM-dd') AS [Start]
 	WHERE YEAR([Start]) = 2011 OR YEAR([Start]) = 2012
 	ORDER BY [Start], [Name]
 
+-- 15. User Email Providers
+
+SELECT Username, SUBSTRING(Email, CHARINDEX('@', Email) + 1, LEN(Email)) AS [Email Provider]
+	FROM [Users]
+	ORDER BY [Email Provider], Username
+
