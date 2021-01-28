@@ -24,3 +24,11 @@ SELECT PeakName, RiverName
 	FROM Peaks
 	JOIN Rivers ON (RIGHT(PeakName, 1) = LEFT(RiverName, 1))
 	ORDER BY Mix
+
+-- 14. Games From 2011 and 2012 Year
+
+SELECT TOP(50) [Name], FORMAT([Start], 'yyyy-MM-dd') AS [Start]
+	FROM [dbo].[Games]
+	WHERE YEAR([Start]) = 2011 OR YEAR([Start]) = 2012
+	ORDER BY [Start], [Name]
+
