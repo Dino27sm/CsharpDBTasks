@@ -11,3 +11,16 @@ SELECT CountryName AS [Country Name], IsoCode AS [ISO Code]
 	WHERE (LEN(CountryName) - LEN(REPLACE(CountryName, 'a', ''))) >= 3
 	ORDER BY IsoCode
 
+-- 13. Mix of Peak and River Names
+
+SELECT PeakName, RiverName
+	,LOWER(CONCAT(SUBSTRING(PeakName, 1, LEN(PeakName)-1), RiverName)) AS Mix
+	FROM Peaks
+	JOIN Rivers ON (RIGHT(PeakName, 1) = LEFT(RiverName, 1))
+	ORDER BY Mix
+
+SELECT PeakName, RiverName
+	,LOWER(STUFF(PeakName, LEN(PeakName), 1, RiverName)) AS Mix
+	FROM Peaks
+	JOIN Rivers ON (RIGHT(PeakName, 1) = LEFT(RiverName, 1))
+	ORDER BY Mix
