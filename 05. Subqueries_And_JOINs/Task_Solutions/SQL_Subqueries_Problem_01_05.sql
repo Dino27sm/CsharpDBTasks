@@ -13,3 +13,9 @@ SELECT TOP(50) e.FirstName, e.LastName, t.[Name] AS Town, a.AddressText
 	JOIN [Towns] AS t ON a.TownID = t.TownID
 	ORDER BY e.FirstName, e.LastName
 
+-- 03. Sales Employees
+
+SELECT e.EmployeeID, e.FirstName, e.LastName, d.[Name] AS DepartmentName
+	FROM [Employees] AS e
+	JOIN [Departments] AS d ON (e.DepartmentID = d.DepartmentID) AND (d.[Name] = 'Sales')
+	ORDER BY e.EmployeeID
