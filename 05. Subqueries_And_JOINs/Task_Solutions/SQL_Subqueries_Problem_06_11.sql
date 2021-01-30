@@ -21,3 +21,10 @@ SELECT TOP(5) e.EmployeeID, e.FirstName, p.[Name] AS ProjectName
 	WHERE p.EndDate IS NULL AND p.StartDate > '2002-08-13'
 	ORDER BY e.EmployeeID
 	
+SELECT TOP(5) e.EmployeeID, e.FirstName, p.[Name] AS ProjectName
+	FROM [Employees] AS e
+	JOIN [EmployeesProjects] AS ep ON e.EmployeeID = ep.EmployeeID
+	JOIN [Projects] AS p ON ep.ProjectID = p.ProjectID
+	WHERE p.EndDate IS NULL AND p.StartDate > CONVERT(DATETIME, '13.08.2002', 104)
+	ORDER BY e.EmployeeID
+	
