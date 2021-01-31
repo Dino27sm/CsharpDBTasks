@@ -21,3 +21,12 @@ SELECT mc.CountryCode, COUNT(mc.MountainId) AS MountainRange
 	FROM [MountainsCountries] AS mc
 	WHERE mc.CountryCode IN ('US', 'RU', 'BG')
 	GROUP BY mc.CountryCode
+
+-- 14. Countries With or Without Rivers
+
+SELECT TOP(5) c.CountryName, r.RiverName
+	FROM [CountriesRivers] AS cr
+	FULL JOIN [Countries] AS c ON cr.CountryCode = c.CountryCode
+	FULL JOIN [Rivers] AS r ON cr.RiverId = r.Id
+	WHERE c.ContinentCode = 'AF'
+	ORDER BY c.CountryName
