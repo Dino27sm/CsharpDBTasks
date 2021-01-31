@@ -37,3 +37,19 @@ SELECT TOP(5) c.CountryName, r.RiverName
 	LEFT JOIN [Rivers] AS r ON cr.RiverId = r.Id
 	WHERE c.ContinentCode = 'AF'
 	ORDER BY c.CountryName
+
+-- 15. Continents and Currencies
+
+SELECT ContinentCode, CurrencyCode, TempTable.currency AS CurrencyUsage
+	FROM
+		(
+		SELECT ContinentCode, CurrencyCode, COUNT(CurrencyCode) AS currency,
+			DENSE_RANK() OVER(PARTITION BY ContinentCode ORDER BY COUNT(CurrencyCode) DESC) AS Ranked
+			FROM [Countries]
+			GROUP BY ContinentCode, CurrencyCode
+		)
+		AS TempTable
+
+	WHERE TempTable.Ranked = 1 AND TempTable.currency > 1
+	ORDER BY ContinentCode
+	
