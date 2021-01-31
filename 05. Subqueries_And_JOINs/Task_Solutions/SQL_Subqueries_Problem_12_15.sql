@@ -16,3 +16,8 @@ SELECT c.CountryCode, COUNT(c.CountryCode) AS MountainRange
 	JOIN [Mountains] AS m ON mc.MountainId = m.Id
 	WHERE c.CountryCode IN ('US', 'RU', 'BG')
 	GROUP BY c.CountryCode
+
+SELECT mc.CountryCode, COUNT(mc.MountainId) AS MountainRange
+	FROM [MountainsCountries] AS mc
+	WHERE mc.CountryCode IN ('US', 'RU', 'BG')
+	GROUP BY mc.CountryCode
