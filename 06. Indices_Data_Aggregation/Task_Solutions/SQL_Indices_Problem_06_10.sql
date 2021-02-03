@@ -18,3 +18,10 @@ SELECT *
 	AS TempTable
 	WHERE TempTable.TotalSum < 150000
 	ORDER BY TotalSum DESC
+
+SELECT [DepositGroup], SUM([DepositAmount]) AS TotalSum
+	FROM [WizzardDeposits]
+	WHERE [MagicWandCreator] = 'Ollivander family'
+	GROUP BY [DepositGroup], [MagicWandCreator]
+	HAVING SUM([DepositAmount]) < 150000
+	ORDER BY TotalSum DESC
