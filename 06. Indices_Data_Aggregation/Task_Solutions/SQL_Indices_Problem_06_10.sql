@@ -69,3 +69,11 @@ SELECT LEFT(FirstName, 1) AS FirstLetter
 	WHERE [DepositGroup] = 'Troll Chest'
 	GROUP BY LEFT(FirstName, 1)
 --------------------------------
+
+SELECT FirstLetter
+	FROM(SELECT LEFT(FirstName, 1) AS FirstLetter
+			FROM [WizzardDeposits]
+			WHERE [DepositGroup] = 'Troll Chest'
+		)AS TempTable
+	GROUP BY FirstLetter
+--------------------------------
