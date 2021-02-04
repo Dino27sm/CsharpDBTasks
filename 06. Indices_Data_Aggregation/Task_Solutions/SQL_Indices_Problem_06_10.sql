@@ -50,3 +50,11 @@ SELECT AgeGroup, COUNT(AgeGroup) AS WizardCount
 		 )
 		 AS TempTable
 	GROUP BY AgeGroup
+
+-- 10. First Letter
+
+SELECT DISTINCT LEFT(FirstName, 1) AS FirstLetter
+	FROM [WizzardDeposits]
+	WHERE [DepositGroup] = 'Troll Chest'
+	ORDER BY FirstLetter
+------------------------------
