@@ -31,4 +31,11 @@ SELECT DepartmentID, MIN(Salary) AS MinimumSalary
 	WHERE [HireDate] > '01/01/2000'
 	GROUP BY DepartmentID
 	HAVING DepartmentID IN (2, 5, 7)
+
+-- 15. Employees Average Salaries
+
+SELECT * INTO TempTable
+	FROM [Employees]
+	WHERE Salary > 30000
+
 	
