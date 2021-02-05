@@ -11,3 +11,10 @@ SELECT DepositGroup, IsDepositExpired, AVG([DepositInterest])
 SELECT SUM(host.DepositAmount - guest.DepositAmount) AS SumDifference
 	FROM WizzardDeposits AS host
 	JOIN WizzardDeposits AS guest ON host.Id + 1 = guest.Id
+
+-----------------------------------Another solution using LEAD--------------------------------
+SELECT SUM(DepositAmount - SecondDeposit) AS SumDifference
+	FROM(SELECT DepositAmount, LEAD(DepositAmount, 1) OVER(ORDER BY Id) AS SecondDeposit
+		FROM WizzardDeposits) AS TempTable
+
+	
