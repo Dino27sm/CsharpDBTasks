@@ -6,3 +6,8 @@ SELECT DepositGroup, IsDepositExpired, AVG([DepositInterest])
 	GROUP BY DepositGroup, IsDepositExpired
 	ORDER BY DepositGroup DESC, IsDepositExpired
 
+-- 12. Rich Wizard, Poor Wizard
+
+SELECT SUM(host.DepositAmount - guest.DepositAmount) AS SumDifference
+	FROM WizzardDeposits AS host
+	JOIN WizzardDeposits AS guest ON host.Id + 1 = guest.Id
