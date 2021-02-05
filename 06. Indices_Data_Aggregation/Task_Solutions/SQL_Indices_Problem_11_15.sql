@@ -17,4 +17,10 @@ SELECT SUM(DepositAmount - SecondDeposit) AS SumDifference
 	FROM(SELECT DepositAmount, LEAD(DepositAmount, 1) OVER(ORDER BY Id) AS SecondDeposit
 		FROM WizzardDeposits) AS TempTable
 
+-- 13. Departments Total Salaries
+
+SELECT [DepartmentID], SUM([Salary]) AS TotalSalary
+	FROM [Employees]
+	GROUP BY [DepartmentID]
+	ORDER BY [DepartmentID]
 	
