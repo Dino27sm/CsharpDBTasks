@@ -11,3 +11,12 @@ SELECT COUNT(*) AS [Count]
 	FROM [Employees]
 	WHERE ManagerID IS NULL
 
+-- 18. 3rd Highest Salary
+
+SELECT DISTINCT DepartmentID, [Salary] AS ThirdHighestSalary
+	FROM(SELECT DepartmentID, [Salary],
+			DENSE_RANK() OVER(PARTITION BY DepartmentID ORDER BY [Salary] DESC) AS Ranked
+			FROM [Employees]
+		) AS TempTable
+	WHERE Ranked = 3
+
