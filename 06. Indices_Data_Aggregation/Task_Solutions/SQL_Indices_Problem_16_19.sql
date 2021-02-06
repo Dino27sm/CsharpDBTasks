@@ -30,3 +30,10 @@ SELECT TOP(10) FirstName, LastName, DepartmentID
 						GROUP BY DepartmentID)
 	ORDER BY DepartmentID
 
+SELECT TOP(10) FirstName, LastName, DepartmentID
+	FROM [Employees] AS e
+	WHERE Salary > (SELECT AVG(Salary)
+						FROM [Employees]
+						WHERE e.DepartmentID = DepartmentID)
+	ORDER BY DepartmentID
+
