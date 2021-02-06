@@ -20,3 +20,13 @@ SELECT DISTINCT DepartmentID, [Salary] AS ThirdHighestSalary
 		) AS TempTable
 	WHERE Ranked = 3
 
+-- 19. Salary Challenge
+
+SELECT TOP(10) FirstName, LastName, DepartmentID
+	FROM [Employees] AS e
+	WHERE Salary > (SELECT AVG(Salary)
+						FROM [Employees]
+						WHERE e.DepartmentID = DepartmentID
+						GROUP BY DepartmentID)
+	ORDER BY DepartmentID
+
