@@ -17,3 +17,13 @@ BEGIN
 END
 EXEC usp_GetEmployeesSalaryAbove35000
 
+-- 02. Employees with Salary Above Number
+
+CREATE PROC usp_GetEmployeesSalaryAboveNumber (@Salary DECIMAL(18, 4))
+AS
+	SELECT FirstName AS [First Name], LastName AS [Last Name]
+		FROM Employees
+		WHERE Salary >= @Salary
+GO
+EXEC usp_GetEmployeesSalaryAboveNumber 48100	-- NO brackets when passing parameters
+
