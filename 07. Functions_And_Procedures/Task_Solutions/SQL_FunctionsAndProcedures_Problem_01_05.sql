@@ -27,3 +27,13 @@ AS
 GO
 EXEC usp_GetEmployeesSalaryAboveNumber 48100	-- NO brackets when passing parameters
 
+-- 03. Town Names Starting With
+
+CREATE PROC usp_GetTownsStartingWith (@String NVARCHAR(MAX))
+AS
+	SELECT t.[Name] AS Town
+		FROM Towns AS t
+		WHERE t.[Name] LIKE @String + '%'
+GO
+EXEC usp_GetTownsStartingWith 'b'
+
