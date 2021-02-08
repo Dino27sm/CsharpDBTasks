@@ -30,3 +30,22 @@ END
 GO
 SELECT [dbo].[ufn_IsWordComprised]('oistmiahf', 'Sofia') AS Result
 
+-- 08. Delete Employees and Departments --------------------------------------
+
+GO
+CREATE OR ALTER PROCEDURE usp_DeleteEmployeesFromDepartment(@departmentId int)
+AS
+DELETE
+    FROM EmployeesProjects
+    WHERE EmployeeID IN (SELECT EmployeeID
+                             FROM Employees
+                             WHERE DepartmentID = @departmentId)
+
+UPDATE Employees
+SET ManagerID=NULL
+    WHERE ManagerID IN (SELECT EmployeeID
+                            FROM Employees
+                            WHERE DepartmentID = @departmentId)
+    ALTER TABLE Departments
+        ALTER COLUMN ManagerID INT
+
