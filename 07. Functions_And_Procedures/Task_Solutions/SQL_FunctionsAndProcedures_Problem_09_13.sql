@@ -44,3 +44,16 @@ BEGIN
 END
 SELECT dbo.ufn_CalculateFutureValue (1000, 0.1, 5) AS [Output]
 
+-- 12. Calculating Interest
+
+CREATE OR ALTER PROC usp_CalculateFutureValueForAccount (@accountId INT, @iterestRate DECIMAL(7, 4))
+AS
+	SELECT @accountId AS [Account Id], FirstName AS [First Name], LastName AS [Last Name], 
+			Balance AS [Current Balance], 
+			dbo.ufn_CalculateFutureValue (acc.Balance, @iterestRate, 5) AS [Balance in 5 years]
+	 FROM [AccountHolders] AS ach
+	 JOIN [Accounts] AS acc ON acc.AccountHolderId = ach.Id
+	 WHERE acc.Id = @accountId
+
+EXEC usp_CalculateFutureValueForAccount 1, 0.1
+
