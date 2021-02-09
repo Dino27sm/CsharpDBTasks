@@ -57,3 +57,16 @@ AS
 
 EXEC usp_CalculateFutureValueForAccount 1, 0.1
 
+-- 13. *Cash in User Games Odd Rows
+
+-- USE Diablo
+CREATE OR ALTER FUNCTION ufn_CashInUsersGames (@gameName NVARCHAR(50))
+RETURNS TABLE
+RETURN
+	(SELECT SUM(TempTable.Cash) AS SumCash
+		FROM(SELECT ug.GameId, ug.Cash, g.Id, g.Name, ROW_NUMBER() OVER(ORDER BY Cash DESC) AS RowNum
+				FROM [UsersGames] AS ug
+				JOIN [Games] AS g ON ug.GameId = g.Id
+				WHERE g.[Name] = @gameName
+			)AS TempTable
+	WHERE TempTable.RowNum % 2 = 1)
