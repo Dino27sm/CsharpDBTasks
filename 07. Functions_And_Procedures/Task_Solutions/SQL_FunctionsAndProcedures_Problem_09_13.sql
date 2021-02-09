@@ -21,3 +21,14 @@ SELECT FirstName AS [First Name], LastName AS [Last Name]
 		ORDER BY FirstName, LastName
 
 -----------------------------------------------------
+CREATE OR ALTER PROC usp_GetHoldersWithBalanceHigherThan (@totalBalance DECIMAL(17, 2))
+AS
+SELECT FirstName AS [First Name], LastName AS [Last Name]
+	FROM [AccountHolders] AS ah
+	JOIN [Accounts] AS acc ON acc.AccountHolderId = ah.Id
+	GROUP BY FirstName, LastName
+	HAVING SUM(Balance) > @totalBalance
+	ORDER BY FirstName, LastName
+
+-- EXEC usp_GetHoldersWithBalanceHigherThan 10000
+
