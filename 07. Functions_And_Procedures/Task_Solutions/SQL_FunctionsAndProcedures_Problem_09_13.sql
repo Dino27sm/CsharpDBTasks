@@ -32,3 +32,15 @@ SELECT FirstName AS [First Name], LastName AS [Last Name]
 
 -- EXEC usp_GetHoldersWithBalanceHigherThan 10000
 
+-- 11. Future Value Function
+
+CREATE OR ALTER FUNCTION ufn_CalculateFutureValue (@initialSum MONEY, @rate FLOAT, @years INT)
+RETURNS DECIMAL(17, 4)
+AS
+BEGIN
+	DECLARE @resultSum DECIMAL(17, 4);
+	SET @resultSum = @initialSum * (POWER((1 + @rate), @years));
+	RETURN @resultSum;
+END
+SELECT dbo.ufn_CalculateFutureValue (1000, 0.1, 5) AS [Output]
+
