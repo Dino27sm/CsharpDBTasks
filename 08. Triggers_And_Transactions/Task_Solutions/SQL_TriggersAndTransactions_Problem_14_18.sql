@@ -16,3 +16,27 @@ AS
 	VALUES
 		(@accountId, @oldSum, @newSum)
 GO
+-- 15. Create Table Emails
+
+CREATE TABLE NotificationEmails
+(
+	Id INT PRIMARY KEY IDENTITY NOT NULL, 
+	Recipient INT REFERENCES Accounts(Id) NOT NULL, 
+	[Subject] NVARCHAR(500) NOT NULL, 
+	Body NVARCHAR(500) NOT NULL
+)
+GO
+CREATE OR ALTER TRIGGER tr_CreateEmailWhenLogsChanges ON Logs FOR INSERT
+AS
+	DECLARE @oldSum NVARCHAR(100) = CAST((SELECT OldSum FROM inserted) AS NVARCHAR(100))
+	DECLARE @newSum NVARCHAR(100) = CAST((SELECT NewSum FROM inserted) AS NVARCHAR(100))
+	DECLARE @date NVARCHAR(100) = CAST(GETDATE() AS NVARCHAR(100))
+	DECLARE @recepient INT = (SELECT AccountId FROM inserted)
+	DECLARE @subject NVARCHAR(500) = 'Balance change for account: ' + CAST(@recepient AS NVARCHAR(100))
+	DECLARE @body NVARCHAR(500) = CONCAT('On ', @date, ' your balance was changed from ', 
+			@oldSum, ' to ', @newSum, '.')
+
+	INSERT INTO NotificationEmails (Recipient, [Subject], Body)
+	VALUES
+		(@recepient, @subject, @body)
+
