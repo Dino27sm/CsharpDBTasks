@@ -64,3 +64,33 @@ BEGIN TRANSACTION
 COMMIT
 EXEC usp_DepositMoney 1, 100
 
+-- 17. Withdraw Money Procedure
+GO
+CREATE OR ALTER PROC usp_WithdrawMoney (@accountId INT, @moneyAmount DECIMAL(17, 4))
+AS
+BEGIN TRANSACTION
+	DECLARE @checkId INT = (SELECT Id FROM Accounts WHERE Id = @accountId)
+	DECLARE @availableMoney DECIMAL(17, 4) = (SELECT Balance FROM Accounts WHERE Id = @accountId)
+	IF(@checkId IS NULL)
+		BEGIN
+			ROLLBACK;
+			THROW 50001, 'Invali account!', 1
+		END
+
+	IF(@moneyAmount < 0)
+		BEGIN
+			ROLLBACK;
+			THROW 50002, 'Neative money amount!', 1;
+		END
+
+	IF(@availableMoney < @moneyAmount)
+		BEGIN
+			ROLLBACK;
+			THROW 50003, 'Isufficient money amount!', 1;
+		END
+
+	UPDATE Accounts
+		SET Balance -= @moneyAmount
+		WHERE Id = @accountId
+COMMIT
+EXEC usp_WithdrawMoney 5, 25
