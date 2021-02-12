@@ -40,3 +40,27 @@ AS
 	VALUES
 		(@recepient, @subject, @body)
 
+-- 16. Deposit Money
+GO
+CREATE OR ALTER PROC usp_DepositMoney (@accountId INT, @moneyAmount DECIMAL(17, 4))
+AS
+BEGIN TRANSACTION
+	DECLARE @checkId INT = (SELECT Id FROM Accounts WHERE Id = @accountId)
+	IF(@checkId IS NULL)
+		BEGIN
+			ROLLBACK;
+			THROW 50001, 'Invali account!', 1
+		END
+
+	IF(@moneyAmount < 0)
+		BEGIN
+			ROLLBACK;
+			THROW 50002, 'Neative money amount!', 1;
+		END
+
+	UPDATE Accounts
+		SET Balance += @moneyAmount
+		WHERE Id = @accountId
+COMMIT
+EXEC usp_DepositMoney 1, 100
+
