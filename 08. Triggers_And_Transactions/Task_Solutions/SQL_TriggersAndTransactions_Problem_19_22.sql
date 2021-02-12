@@ -37,3 +37,14 @@ UPDATE [UsersGames]
 	WHERE UserId IN (SELECT UserId FROM TempTable_CTE) 
 				AND GameId IN (SELECT GameID FROM TempTable_CTE)
 GO
+------- Another BETTER solution of 19-2. Trigger    --------------------------------
+
+UPDATE [UsersGames]
+	SET Cash -= 50000
+	WHERE UserId IN (SELECT Id FROM [Users] 
+							WHERE Username IN ('baleremuda', 'loosenoise'
+								, 'inguinalself', 'buildingdeltoid', 'monoxidecos'))
+								AND GameId IN (SELECT Id FROM [Games] WHERE [Name] = 'Bali')
+
+GO
+------------------------------------------------------------------------------------
