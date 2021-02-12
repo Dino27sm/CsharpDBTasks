@@ -94,3 +94,16 @@ BEGIN TRANSACTION
 		WHERE Id = @accountId
 COMMIT
 EXEC usp_WithdrawMoney 5, 25
+
+-- 18. Money Transfer
+GO
+CREATE OR ALTER PROC usp_TransferMoney(@senderId INT, @receiverId INT, @amount DECIMAL(17, 4))
+AS
+BEGIN TRANSACTION
+	EXEC usp_WithdrawMoney @senderId, @amount;
+	EXEC usp_DepositMoney @receiverId, @amount;
+COMMIT
+
+EXEC usp_TransferMoney 5, 1, 5000;
+
+SELECT * FROM Accounts WHERE Id IN (1, 5)
