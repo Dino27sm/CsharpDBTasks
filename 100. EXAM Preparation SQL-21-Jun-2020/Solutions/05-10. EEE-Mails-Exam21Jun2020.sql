@@ -28,3 +28,13 @@ SELECT temp.Id AS AccountId, temp.FullName, MAX(TripDays) AS LongestTrip, MIN(Tr
 	GROUP BY temp.Id, temp.FullName
 	ORDER BY MAX(TripDays) DESC, MIN(TripDays)
 
+-- 08. Metropolis
+
+SELECT TOP(10) Id, [Name] AS City, CountryCode AS Country, Accounts
+	FROM (SELECT c.Id, a.CityId, c.[Name], c.CountryCode, COUNT(*) AS Accounts
+			FROM Cities AS c
+			JOIN Accounts AS a ON a.CityId = c.Id
+			GROUP BY c.Id, a.CityId, c.[Name], c.CountryCode) AS temp
+
+	ORDER BY Accounts DESC
+
