@@ -16,3 +16,15 @@ SELECT temp.City, temp.Hotels
 
 	ORDER BY temp.Hotels DESC, temp.City
 
+-- 07. Longest and Shortest Trips
+
+SELECT temp.Id AS AccountId, temp.FullName, MAX(TripDays) AS LongestTrip, MIN(TripDays) AS ShortestTrip
+	FROM (SELECT a.Id, a.FirstName + ' ' + a.LastName AS FullName,
+				DATEDIFF(DAY, tr.ArrivalDate, tr.ReturnDate) AS TripDays
+			FROM Accounts AS a
+			JOIN AccountsTrips AS atr ON a.Id = atr.AccountId
+			JOIN Trips tr ON atr.TripId = tr.Id
+			WHERE (a.MiddleName IS NULL AND tr.CancelDate IS NULL)) AS temp
+	GROUP BY temp.Id, temp.FullName
+	ORDER BY MAX(TripDays) DESC, MIN(TripDays)
+
