@@ -12,8 +12,8 @@ SET @stringOut = (SELECT TOP(1) 'Room ' + CAST(r.Id AS VARCHAR) + ': '
 	WHERE (h.Id = @HotelId)
 			AND (r.Beds >= @People) AND
 			NOT EXISTS(SELECT * FROM Trips AS tr WHERE tr.RoomId = r.Id
-											AND CancelDate IS NULL
-											AND @Date BETWEEN ArrivalDate AND ReturnDate)
+			AND CancelDate IS NULL
+			AND @Date BETWEEN ArrivalDate AND ReturnDate)
 	ORDER BY (h.BaseRate + r.Price) * @People DESC)
 IF (@stringOut IS NULL)
 	RETURN 'No rooms available'
@@ -34,10 +34,10 @@ SET @roomID = (SELECT TOP(1) r.Id
 				FROM Rooms AS r
 				JOIN Trips AS tr ON tr.RoomId = r.Id
 				WHERE (@Date NOT BETWEEN tr.ArrivalDate AND tr.ReturnDate)
-						AND (YEAR(@Date) = YEAR(tr.ArrivalDate))
-						AND (tr.CancelDate IS NULL)
-						AND (r.Beds >= @People)
-						AND (r.HotelId = @HotelId)
+					AND (YEAR(@Date) = YEAR(tr.ArrivalDate))
+					AND (tr.CancelDate IS NULL)
+					AND (r.Beds >= @People)
+					AND (r.HotelId = @HotelId)
 				ORDER BY r.Price DESC
 				)
 IF (@roomID IS NULL)
@@ -59,12 +59,12 @@ GO
 CREATE OR ALTER PROC usp_SwitchRoom(@TripId INT, @TargetRoomId INT)
 AS
 	DECLARE @tripHotelID INT = (SELECT r.HotelId
-								FROM Trips AS tr
-								JOIN Rooms AS r ON tr.RoomId = r.Id
-								WHERE tr.Id = @TripId)
+					FROM Trips AS tr
+					JOIN Rooms AS r ON tr.RoomId = r.Id
+					WHERE tr.Id = @TripId)
 	DECLARE @tripRoomID INT = (SELECT RoomId
-								FROM Trips
-								WHERE Id = @TripId)
+					FROM Trips
+					WHERE Id = @TripId)
 	DECLARE @targetRoomHotelID INT = (SELECT HotelId FROM Rooms WHERE Id = @TargetRoomId)
 
 	IF (@targetRoomHotelID != @tripHotelID)
