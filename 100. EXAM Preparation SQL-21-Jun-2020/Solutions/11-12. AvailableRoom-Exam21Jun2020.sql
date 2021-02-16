@@ -1,3 +1,5 @@
+-- 11. Available Room
+
 CREATE OR ALTER FUNCTION udf_GetAvailableRoom(@HotelId INT, @Date DATE, @People INT)
 RETURNS NVARCHAR(MAX)
 AS
