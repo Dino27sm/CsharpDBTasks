@@ -51,3 +51,17 @@ SELECT a.Id, a.Email, c.[Name] AS City, COUNT(*) AS Trips
 	GROUP BY a.Id, a.Email, c.[Name]
 	ORDER BY COUNT(*) DESC, a.Id
 
+-- 10. GDPR Violation
+
+SELECT tr.Id, 
+		(a.FirstName + ' ' +IIF(MiddleName IS NULL, '', MiddleName + ' ') + LastName) AS [Full Name], 
+		(SELECT [Name] FROM Cities WHERE Id = a.CityId) AS [From],
+		(SELECT [Name] FROM Cities WHERE Id = h.CityId) AS [To],
+		IIF(tr.CancelDate IS NOT NULL, 'Canceled', CAST(DATEDIFF(DAY, tr.ArrivalDate, tr.ReturnDate) AS VARCHAR) + ' days') AS Duration
+	FROM Accounts AS a
+	JOIN AccountsTrips AS atr ON atr.AccountId = a.Id
+	JOIN Trips AS tr ON tr.Id = atr.TripId
+	JOIN Rooms AS r ON r.Id = tr.RoomId
+	JOIN Hotels AS h ON h.Id = r.HotelId
+
+	ORDER BY [Full Name], tr.Id
