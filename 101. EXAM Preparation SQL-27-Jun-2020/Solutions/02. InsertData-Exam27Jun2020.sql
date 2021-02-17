@@ -16,3 +16,26 @@ VALUES
 	('W10780048', 'Suspension Rod', 42.81, 1),
 	('W10841140', 'Silicone Adhesive', 6.77, 4),
 	('WPY055980', 'High Temperature Adhesive', 13.94, 3)
+
+-- 03. Update
+-- Ryan Harnos  FROM Mechanics --- Id = 3
+
+SELECT *
+	FROM Mechanics
+	WHERE FirstName = 'Ryan' AND LastName = 'Harnos'
+
+SELECT *
+	FROM Jobs
+	WHERE MechanicId = 3
+
+SELECT *
+	FROM Jobs
+	WHERE Status = 'Pending'
+
+UPDATE Jobs
+	SET MechanicId = 3
+	WHERE Status = 'Pending'
+
+UPDATE Jobs
+	SET Status = 'In Progress'
+	WHERE MechanicId = 3 AND Status = 'Pending'
