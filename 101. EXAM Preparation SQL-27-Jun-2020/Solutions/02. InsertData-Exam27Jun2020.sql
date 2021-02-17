@@ -39,3 +39,12 @@ UPDATE Jobs
 UPDATE Jobs
 	SET Status = 'In Progress'
 	WHERE MechanicId = 3 AND Status = 'Pending'
+
+-- 04. Delete
+-- Order ID = 19 --> to JobID = 45
+
+SELECT * FROM Orders
+SELECT * FROM OrderParts
+
+DELETE FROM OrderParts WHERE OrderId = 19
+DELETE FROM Orders WHERE OrderId = 19
