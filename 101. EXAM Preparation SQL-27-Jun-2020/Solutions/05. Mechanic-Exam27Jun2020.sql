@@ -36,14 +36,6 @@ SELECT (temp.FirstName + ' ' + temp.LastName) AS Mechanic, temp.[Average Days]
 	ORDER BY temp.MechanicId
 
 -- 08. Available Mechanics
-
---SELECT temp.MechanicId, (temp.FirstName + ' ' + temp.LastName) AS Available
---	FROM (SELECT m.MechanicId, m.FirstName, m.LastName
---			FROM Mechanics AS m
---			LEFT JOIN Jobs AS j ON j.MechanicId = m.MechanicId
---			WHERE j.[Status] != 'Finished'
---			GROUP BY m.MechanicId, m.FirstName, m.LastName) AS temp
-
 --------  HERE IS THE SOLUTION  ---------	
 SELECT (m.FirstName + ' ' + m.LastName) AS Available
 	FROM Mechanics AS m
