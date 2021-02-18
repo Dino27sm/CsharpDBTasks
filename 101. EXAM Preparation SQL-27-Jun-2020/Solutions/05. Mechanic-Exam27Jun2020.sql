@@ -26,5 +26,15 @@ SELECT (temp.FirstName + ' ' + temp.LastName) AS Mechanic, temp.[Average Days]
 	ORDER BY temp.MechanicId
 -------------------------------------------------------------------------------------
 
+SELECT (temp.FirstName + ' ' + temp.LastName) AS Mechanic, temp.[Average Days]
+	FROM(SELECT m.MechanicId, m.FirstName, m.LastName,
+				AVG((DATEDIFF(DAY, IssueDate, FinishDate))) AS [Average Days]
+			FROM Mechanics AS m
+			JOIN Jobs AS j ON j.MechanicId = m.MechanicId
+			WHERE j.Status = 'Finished'
+			GROUP BY m.MechanicId, m.FirstName, m.LastName) AS temp
+	ORDER BY temp.MechanicId
+
+
 
 
