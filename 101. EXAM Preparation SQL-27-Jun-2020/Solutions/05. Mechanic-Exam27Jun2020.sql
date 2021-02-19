@@ -74,4 +74,17 @@ FROM (SELECT p.PartId, p.[Description], pn.Quantity AS [Required]
 	) AS tmp
 GROUP BY tmp.PartId, tmp.[Description], tmp.[Required], tmp.[In Stock], tmp.Delivered
 
+---------------------------------------  ANOTHER SOLUTION  ------------------------------------
+
+SELECT p.PartId, p.[Description], pn.Quantity, p.StockQty, 
+		IIF(O.Delivered = 0, op.Quantity, 0) AS Ordered
+    FROM Jobs AS j
+	LEFT JOIN Orders AS o ON o.JobId = j.JobId
+	LEFT JOIN PartsNeeded AS pn ON pn.JobId = j.JobId
+	LEFT JOIN Parts AS p ON p.PartId = pn.PartId
+	LEFT JOIN OrderParts AS op ON op.OrderId = p.PartId
+    WHERE j.Status != 'Finished'
+      AND (p.StockQty + IIF(o.Delivered = 0, op.Quantity, 0)) < pn.Quantity
+	GROUP BY p.PartId, p.[Description], pn.Quantity, p.StockQty, 
+		IIF(O.Delivered = 0, op.Quantity, 0)
 
