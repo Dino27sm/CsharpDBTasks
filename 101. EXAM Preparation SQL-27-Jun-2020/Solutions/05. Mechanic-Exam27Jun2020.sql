@@ -58,5 +58,20 @@ SELECT j.JobId, ISNULL(SUM(op.Quantity * p.Price), 0) AS Total
 	GROUP BY j.JobId
 	ORDER BY Total DESC, JobId
 
+-- 10. Missing Parts
+
+SELECT tmp.PartId, tmp.[Description], tmp.[Required], tmp.[In Stock], tmp.Delivered AS Ordered
+FROM (SELECT p.PartId, p.[Description], pn.Quantity AS [Required] 
+			,p.StockQty AS [In Stock]
+			,IIF((SELECT Delivered FROM Orders AS o WHERE j.JobId = o.JobId) IS NULL, 0, 1) AS Delivered
+	FROM Jobs AS j
+	LEFT JOIN PartsNeeded AS pn ON pn.JobId = j.JobId
+	LEFT JOIN Parts AS p ON p.PartId = pn.PartId
+	LEFT JOIN OrderParts AS op ON op.OrderId = p.PartId
+	WHERE (j.Status != 'Finished') 
+			AND (pn.Quantity > p.StockQty) 
+			AND (SELECT Delivered FROM Orders AS o WHERE j.JobId = o.JobId) IS NULL
+	) AS tmp
+GROUP BY tmp.PartId, tmp.[Description], tmp.[Required], tmp.[In Stock], tmp.Delivered
 
 
