@@ -16,3 +16,9 @@ VALUES
 	('Falcon9', 'SpaceX', 1),
 	('Bed' , 'Vidolov', 6)
 
+-- 03. Update
+
+UPDATE [Spaceships]
+	SET [LightSpeedRate] += 1
+	WHERE Id BETWEEN 8 AND 12
+
