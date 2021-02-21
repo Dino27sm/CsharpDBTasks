@@ -49,3 +49,12 @@ SELECT c.Id, (FirstName + ' ' + LastName) AS FullName
 	JOIN TravelCards AS tc ON tc.ColonistId = c.Id
 	WHERE JobDuringJourney = 'Pilot'
 	ORDER BY c.Id
+
+-- 07. Count Colonists
+--------------------------------  THIS SOLUTION IS NOT ACCEPTED !!!  -------------------
+SELECT COUNT(*) AS [Count]
+	FROM TravelCards AS tc
+	JOIN Colonists AS c ON c.Id = tc.ColonistId
+	JOIN Journeys AS j ON tc.JourneyId = j.Id
+	WHERE j.Purpose = 'Technical'
+
