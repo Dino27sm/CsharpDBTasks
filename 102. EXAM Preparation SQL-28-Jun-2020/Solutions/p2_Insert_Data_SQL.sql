@@ -42,3 +42,10 @@ SELECT Id, FORMAT(JourneyStart, 'dd/MM/yyyy') AS JourneyStart
 	WHERE Purpose = 'Military'
 	ORDER BY JourneyStart
 
+-- 06. Select All Pilots
+
+SELECT c.Id, (FirstName + ' ' + LastName) AS FullName
+	FROM Colonists AS c
+	JOIN TravelCards AS tc ON tc.ColonistId = c.Id
+	WHERE JobDuringJourney = 'Pilot'
+	ORDER BY c.Id
