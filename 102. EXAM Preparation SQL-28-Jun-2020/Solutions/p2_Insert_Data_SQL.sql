@@ -112,3 +112,21 @@ END
 GO
 SELECT dbo.udf_GetColonistsCount('Otroyphus')
 
+-- 12. Change Journey Purpose
+GO
+CREATE OR ALTER PROC usp_ChangeJourneyPurpose(@JourneyId INT, @NewPurpose VARCHAR(11))
+AS
+IF (@JourneyId NOT IN(SELECT Id FROM Journeys))
+	THROW 50001, 'The journey does not exist!', 1;
+
+IF (@NewPurpose = (SELECT Purpose FROM Journeys WHERE Id = @JourneyId))
+	THROW 50002, 'You cannot change the purpose!', 1;
+
+UPDATE Journeys
+	SET Purpose = @NewPurpose
+	WHERE Id = @JourneyId
+GO
+
+EXEC usp_ChangeJourneyPurpose 2, 'Educational'
+EXEC usp_ChangeJourneyPurpose 196, 'Technical'
+EXEC usp_ChangeJourneyPurpose 4, 'Technical'
