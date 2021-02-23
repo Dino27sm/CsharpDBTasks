@@ -84,3 +84,13 @@ SELECT p.[Name] AS PlanetName, COUNT(*) AS JourneysCount
 	JOIN Journeys AS j ON j.DestinationSpaceportId = sp.Id
 	GROUP BY p.[Name]
 	ORDER BY COUNT(*) DESC, p.[Name]
+
+-- 10. Select Special Colonists
+
+SELECT tmp.JobDuringJourney, (tmp.FirstName + ' ' + tmp.LastName) AS FullName, tmp.JobRank
+FROM (SELECT tc.JobDuringJourney, c.FirstName, c.LastName
+       ,DENSE_RANK() OVER (PARTITION BY tc.JobDuringJourney ORDER BY c.BirthDate ASC) AS JobRank
+    FROM Colonists AS c
+    JOIN TravelCards AS tc ON c.Id = tc.ColonistId) AS tmp
+    WHERE tmp.JobRank = 2
+
