@@ -94,3 +94,21 @@ FROM (SELECT tc.JobDuringJourney, c.FirstName, c.LastName
     JOIN TravelCards AS tc ON c.Id = tc.ColonistId) AS tmp
     WHERE tmp.JobRank = 2
 
+-- 11. Get Colonists Count
+
+GO
+CREATE FUNCTION dbo.udf_GetColonistsCount (@PlanetName VARCHAR (30))
+RETURNS INT
+AS
+BEGIN
+RETURN (SELECT COUNT(*)
+			FROM Colonists AS c
+			JOIN TravelCards AS tc ON tc.ColonistId = c.Id
+			JOIN Journeys AS j ON j.Id = tc.JourneyId
+			JOIN Spaceports AS sp ON sp.Id = j.DestinationSpaceportId
+			JOIN Planets AS p ON  p.Id = sp.PlanetId
+			WHERE p.[Name] = @PlanetName)
+END
+GO
+SELECT dbo.udf_GetColonistsCount('Otroyphus')
+
