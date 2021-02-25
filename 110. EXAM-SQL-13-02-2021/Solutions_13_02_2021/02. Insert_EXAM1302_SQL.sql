@@ -17,3 +17,10 @@ VALUES
 	('Implement documentation for UsersService.cs', 'closed', 8, 2),
 	('Unreachable code in Index.cs', 'open', 9, 8)
 
+-- 03. Update
+-- Make issue status 'closed' where Assignee Id is 6.
+
+UPDATE Issues
+SET [IssueStatus] = 'closed'
+WHERE [AssigneeId] = 6
+
