@@ -24,3 +24,8 @@ UPDATE Issues
 SET [IssueStatus] = 'closed'
 WHERE [AssigneeId] = 6
 
+-- 04. Delete
+-- Delete repository "Softuni-Teamwork" in repository contributors and issues.
+
+DELETE RepositoriesContributors WHERE RepositoryId = 3
+DELETE Issues WHERE RepositoryId = 3
