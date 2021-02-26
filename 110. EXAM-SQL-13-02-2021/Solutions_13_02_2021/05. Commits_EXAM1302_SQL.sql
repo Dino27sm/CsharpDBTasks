@@ -27,3 +27,12 @@ SELECT f1.Id, f1.[Name], CONCAT(f1.Size, 'KB') AS Size
 		AND Id NOT IN(SELECT f2.ParentId FROM Files AS f2 WHERE f2.ParentId != f2.Id)
 	ORDER BY f1.Id, f1.[Name], Size DESC
 
+--------------------------- My other solution of 08. Single Files --
+
+SELECT f1.Id, f1.[Name], CONCAT(f1.Size, 'KB') AS Size
+	FROM Files AS f1
+	LEFT JOIN Files AS f2 ON f2.ParentId = f1.Id
+	WHERE f2.Id IS NULL
+	ORDER BY f1.Id, f1.[Name], Size DESC
+
+
