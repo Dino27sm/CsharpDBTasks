@@ -11,3 +11,10 @@ SELECT Id, [Name], [Size]
 	WHERE Size > 1000 AND [Name] LIKE '%html%'
 	ORDER BY [Size] DESC, Id, [Name]
 
+-- 07. Issue Assignment
+
+SELECT i.Id, (u.Username + ' : ' + i.Title) AS IssueAssignee
+	FROM Issues AS i
+	JOIN Users AS u ON i.AssigneeId = u.Id
+	ORDER BY i.Id DESC, i.AssigneeId
+
