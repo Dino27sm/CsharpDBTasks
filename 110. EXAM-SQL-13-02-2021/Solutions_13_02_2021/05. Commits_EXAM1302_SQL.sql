@@ -44,3 +44,11 @@ SELECT TOP(5) r.Id, r.[Name], COUNT(r.Id) AS Commits
 	GROUP BY r.Id, r.[Name]
 	ORDER BY Commits DESC, r.Id, r.[Name]
 
+-- 10. Average Size -------------- OK but --- NOT SENT TO Judge -----
+
+SELECT u.Username, AVG(f.Size) AS Size
+	FROM Users AS u
+	JOIN Commits AS c ON c.ContributorId = u.Id
+	JOIN Files AS f ON f.CommitId = c.Id
+	GROUP BY u.Id, u.Username
+	ORDER BY Size DESC, u.Username
