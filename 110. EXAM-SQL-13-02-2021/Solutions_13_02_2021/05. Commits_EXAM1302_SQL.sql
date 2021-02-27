@@ -52,3 +52,17 @@ SELECT u.Username, AVG(f.Size) AS Size
 	JOIN Files AS f ON f.CommitId = c.Id
 	GROUP BY u.Id, u.Username
 	ORDER BY Size DESC, u.Username
+
+---------------------------------------------------------
+-- 11. All User Commits
+GO
+CREATE FUNCTION udf_AllUserCommits(@username VARCHAR(30))
+RETURNS INT
+AS
+BEGIN
+
+RETURN (SELECT COUNT(*)
+	FROM Commits AS c
+	JOIN Users AS u ON c.ContributorId = u.Id
+	WHERE u.Username = @username)
+END
