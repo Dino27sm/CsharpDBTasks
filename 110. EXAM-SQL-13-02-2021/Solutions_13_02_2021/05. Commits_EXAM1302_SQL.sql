@@ -66,3 +66,16 @@ RETURN (SELECT COUNT(*)
 	JOIN Users AS u ON c.ContributorId = u.Id
 	WHERE u.Username = @username)
 END
+
+-- 12. Search for Files
+GO
+CREATE PROC usp_SearchForFiles(@fileExtension VARCHAR(10))
+AS
+DECLARE @extetion VARCHAR(12) = '%.' + @fileExtension;
+SELECT Id, [Name], (CAST(Size AS VARCHAR) + 'KB') Size
+	FROM Files
+	WHERE [Name] LIKE @extetion
+	ORDER BY Id, [Name], Size DESC
+
+GO 
+EXEC usp_SearchForFiles 'txt'
