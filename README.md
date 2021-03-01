@@ -1,2 +1,2 @@
 # CsharpDBTasks
- SoftUni C# DB Tasks and other materials
+ SoftUni C# DB - Jan 2021 - Contains Tasks solutions and other materials
